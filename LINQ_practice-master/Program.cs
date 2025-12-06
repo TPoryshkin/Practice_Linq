@@ -196,13 +196,24 @@ namespace Practice_Linq
         {
             //Query 7: Вивести перший матч у 2023 році, в якому збірна України виграла.
 
-            FootballGame? g = null; // допиши запит
+            FootballGame? g = games
+                .Where(game => game.Date.Year == 2023 &&
+                              ((game.Home_team == "Ukraine" && game.Home_score > game.Away_score) ||
+                               (game.Away_team == "Ukraine" && game.Away_score > game.Home_score)))
+                .OrderBy(game => game.Date)
+                .FirstOrDefault();
 
 
             // Результат
             Console.WriteLine("\n======================== QUERY 7 ========================");
-
-            
+            if (g != null)
+            {
+                Console.WriteLine($"{g.Date:yyyy-MM-dd} {g.Home_team} - {g.Away_team} ({g.Home_score}:{g.Away_score})");
+            }
+            else
+            {
+                Console.WriteLine("Матчів не знайдено");
+            }
         }
 
         // Запит 8
